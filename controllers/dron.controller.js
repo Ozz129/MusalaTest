@@ -22,9 +22,9 @@ const getDrones = async (req, res) => {
 
 const getDron = async (req, res) => {
     const { id } = req.params;
-
+    console.log('***', id)
     try {
-        const data = await droneModel.find({ id })
+        const data = await droneModel.find({_id: id })
         res.status(200).send({
             success: true,
             data
@@ -43,7 +43,7 @@ const createDrone = async (req, res) => {
         res.status(201).send({});
     } catch (error) {
         console.log(e);
-        handleHttpError(res, `ERROR_GET_DRON: ${id}`);
+        handleHttpError(res, `ERROR_CREATE_DRON: ${id}`);
     }
 }
 
@@ -52,11 +52,11 @@ const updateDrone = async (req, res) => {
     const id = req.params.id;
 
     try {
-        await booksModel.findOneAndUpdate(id, body);
+        await droneModel.findOneAndUpdate(id, body);
         res.status(200).send({})
     } catch (error) {
         console.log(e);
-        handleHttpError(res, `ERROR_GET_DRON: ${id}`);
+        handleHttpError(res, `ERROR_UPDATE_DRON: ${id}`);
     }
 }
 
@@ -64,11 +64,11 @@ const deleteDrone = async (req, res) => {
     const id = req.params.id;
 
     try {
-        await booksModel.delete({_id:id});
+        await droneModel.delete({_id:id});
         res.status(200).send({})
     } catch (error) {
         console.log(e);
-        handleHttpError(res, `ERROR_GET_DRON: ${id}`);
+        handleHttpError(res, `ERROR_DELETE_DRON: ${id}`);
     }
 }
 

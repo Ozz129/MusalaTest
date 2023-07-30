@@ -7,18 +7,18 @@ const dispatchSchema = new mongoose.Schema({
     ref: 'drone',
     required: true,
   },
-  medicamentos: [{
-    medicamento: {
+  meds: [{
+    med: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'med',
       required: true,
     },
-    cantidad: {
+    quantity: {
       type: Number,
       required: true,
     },
   }],
-  destino: {
+  destination: {
     type: String,
     required: true,
   }

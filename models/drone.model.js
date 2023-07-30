@@ -5,13 +5,16 @@ const DroneSchema = new mongoose.Schema(
     serial: {
       type: String,
     },
-    load: {
-      type: Number,
+    loadStatus: {
+      type: Boolean,
     },
     capacity: {
       type: Number,
     },
     batteryStatus: {
+      type: Boolean
+    },
+    battery: {
       type: Number
     },
     identifier: {
