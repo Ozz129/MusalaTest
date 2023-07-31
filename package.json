@@ -1,0 +1,37 @@
+{
+  "name": "musalatest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "cross-env NODE_ENV=test jest --silent --runInBand",
+    "test:file": "cross-env NODE_ENV=test jest --silent --runInBand --testNamePattern=$npm_config_test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-validator": "^7.0.1",
+    "jest": "^29.6.2",
+    "mongoose": "^7.4.1",
+    "mongoose-delete": "^1.0.1",
+    "nodemon": "^3.0.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "coverageReporters": [
+      "json",
+      "html"
+    ],
+    "globalTeardown": "./global-kill.js"
+  }
+}

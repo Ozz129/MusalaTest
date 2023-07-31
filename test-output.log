@@ -1,0 +1,21 @@
+FAIL test/dron.test.js (5.58 s)
+  ● getDrones_function › returns a successful response
+
+    thrown: "Exceeded timeout of 5000 ms for a test.
+    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+      11 | describe('getDrones_function', () => {
+      12 |
+    > 13 |     it('returns a successful response', async () => {
+         |     ^
+      14 |         const req = {};
+      15 |         const res = {
+      16 |             status: jest.fn().mockReturnThis(),
+
+      at it (test/dron.test.js:13:5)
+      at Object.describe (test/dron.test.js:11:1)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 passed, 2 total
+Snapshots:   0 total
+Time:        5.614 s, estimated 6 s

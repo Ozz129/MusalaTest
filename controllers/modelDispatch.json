@@ -1,0 +1,13 @@
+{
+    "drone": "64c5a294186e28c55e2b4bd5",
+    "meds": [
+        {
+        "med": "64c57d15d1bb7af728599fa0",
+        "quantity": 7
+        },{
+        "med": "64c57d15d1bb7af728599fa0",
+        "quantity": 5
+        }
+    ],
+    "destination": "Fake street"
+}
