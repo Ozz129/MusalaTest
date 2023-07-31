@@ -1,155 +1,150 @@
 const express = require("express");
 const router = express.Router();
 
-/*const {
-  validatorCreateItem,
-  validatorGetItem,
-} = require("../validators/bookings");*/
 const {
   createDispatch,
   getDronDispatches
 } = require("../controllers/dispatch.controller");
 
 /**
- * Get all bookings
  * @openapi
- * /bookings:
- *    get:
- *      tags:
- *        - bookings
- *      summary: "Bookings list"
- *      description: Get the entire list of bookings
- *      security:
- *        - bearerAuth: []
- *      responses:
- *        '200':
- *          description: Get the entire list of bookings.
- *          content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/booking'
- *        '422':
- *          description: validation error.
- */
-router.get("/dron/:idDron", getDronDispatches);
-/**
- * Get booking
- * @openapi
- * /bookings/{id}:
- *    get:
- *      tags:
- *        - bookings
- *      summary: "Booking detail"
- *      description: Booking detail
- *      security:
- *        - bearerAuth: []
- *      parameters:
- *      - name: id
- *        in: path
- *        description: booking id
- *        required: true
- *        schema:
- *          type: string
- *      responses:
- *        '200':
- *          description: Get booking details.
- *          content:
+ * /dron/{idDron}:
+ *     get:
+ *       summary: Get dron dispatches
+ *       description: Retrieve a list of dispatches for a specific dron.
+ *       tags: [DronDispatches]
+ *       parameters:
+ *         - in: path
+ *           name: idDron
+ *           required: true
+ *           schema:
+ *             type: string
+ *           description: The ID of the dron to get dispatches for.
+ *       responses:
+ *         200:
+ *           description: A list of dron dispatches.
+ *           content:
  *             application/json:
  *               schema:
- *                   $ref: '#/components/schemas/booking'
- *        '422':
- *          description: validation error.
+ *                 type: object
+ *                 properties:
+ *                   success:
+ *                     type: boolean
+ *                   data:
+ *                     type: array
+ *                     items:
+ *                       $ref: '#/definitions/dispatch'
+ *         500:
+ *           description: Internal server error.
+ * 
+ * definitions:
+ *  dispatch:
+ *    type: "object"
+ *    properties:
+ *      _id:
+ *        type: "string"
+ *      drone:
+ *        type: "string"
+ *      destination:
+ *        type: "string"
+ *      deleted:
+ *        type: "boolean"
+ *      createdAt:
+ *        type: "string"
+ *        format: "date-time"
+ *      updatedAt:
+ *        type: "string"
+ *        format: "date-time"
+ *      __v:
+ *        type: "integer"
+ *        format: "int32"
+ *      meds:
+ *        type: "array"
+ *        items:
+ *          $ref: "#/definitions/medication"
+ *  medication:
+ *    type: "object"
+ *    properties:
+ *      med:
+ *        type: "string"
+ *      quantity:
+ *        type: "integer"
+ *        format: "int32"
+ *      _id:
+ *        type: "string"
  */
-//router.get("/:id", getMeds);
+router.get("/dron/:idDron", getDronDispatches);
+
 /**
- * Register new booking
  * @openapi
- * /bookings:
- *    post:
- *      tags:
- *        - bookings
- *      summary: "Register booking"
- *      description: Regist a new booking
- *      security:
- *        - bearerAuth: []
- *      responses:
- *        '200':
- *          description: Get the new booking registered.
- *        '422':
- *          description: Validation error.
- *      requestBody:
- *          content:
- *            application/json:
- *              schema:
- *                 $ref: "#/components/schemas/booking"
- *    responses:
- *      '201':
- *        description: Get the object registered '201'
+ * /dispatch:
+ *     post:
+ *       summary: Create dispatch
+ *       description: Create a new dispacth.
+ *       tags: [DronDispatches]
+ *       parameters:
+ *         - in: body
+ *           name: drone
+ *           required: true
+ *           schema:
+ *             type: string
+ *           description: The ID of the dron.
+ *         - in: body
+ *           name: meds
+ *           required: true
+ *           schema:
+ *             type: object
+ *             $ref: '#/definitions/medicationForDispatch'
+ *           description: The medication list for load, the field med references the med's id.
+ *         - in: body
+ *           name: destination
+ *           required: true
+ *           schema: 
+ *             type: string
+ *       responses:
+ *         201:
+ *           description: Success creation confirmation.
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *         500:
+ *           description: Internal server error.
+ * 
+ * definitions:
+ *  dispatch:
+ *    type: "object"
+ *    properties:
+ *      _id:
+ *        type: "string"
+ *      drone:
+ *        type: "string"
+ *      destination:
+ *        type: "string"
+ *      deleted:
+ *        type: "boolean"
+ *      createdAt:
+ *        type: "string"
+ *        format: "date-time"
+ *      updatedAt:
+ *        type: "string"
+ *        format: "date-time"
+ *      __v:
+ *        type: "integer"
+ *        format: "int32"
+ *      meds:
+ *        type: "array"
+ *        items:
+ *          $ref: "#/definitions/medication"
+ *  medicationForDispatch:
+ *    type: "object"
+ *    properties:
+ *      med:
+ *        type: "string"
+ *      quantity:
+ *        type: "integer"
+ *        format: "int32"
  */
 router.post("/", createDispatch);
-/**
- * Update booking
- * @openapi
- * /bookings/{id}:
- *    put:
- *      tags:
- *        - bookings
- *      summary: "Update booking"
- *      description: Update a booking
- *      security:
- *        - bearerAuth: []
- *      parameters:
- *      - name: id
- *        in: path
- *        description: booking id
- *        required: true
- *        schema:
- *          type: string
- *      responses:
- *        '200':
- *          description: Get the booking detail updated.
- *        '422':
- *          description: Validation error.
- *      requestBody:
- *          content:
- *            application/json:
- *              schema:
- *                 $ref: "#/components/schemas/booking"
- *    responses:
- *      '201':
- *        description: Get the object
- *        content:
- *           application/json:
- *             schema:
- *                $ref: '#/components/schemas/booking'
- */
-//router.put("/:id", updateMed);
-/**
- * Delete booking
- * @openapi
- * /bookings/{id}:
- *    delete:
- *      tags:
- *        - bookings
- *      summary: "Delete booking"
- *      description: Delete booking
- *      security:
- *        - bearerAuth: []
- *      parameters:
- *      - name: id
- *        in: path
- *        description: Booking id
- *        required: true
- *        schema:
- *          type: string
- *      responses:
- *        '200':
- *          description: Get the booking object.
- *        '422':
- *          description: Validation error.
- */
-//router.delete("/:id", deleteMed);
 
 module.exports = router;

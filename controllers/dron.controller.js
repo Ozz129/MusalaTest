@@ -14,24 +14,21 @@ const getDrones = async (req, res) => {
             data
         })
     } catch (error) {
-        console.log(e);
-        handleHttpError(res, "ERROR_GET_DRONES");
+        handleHttpError(res, "ERROR_GET_DRONES", 500);
     }
 }
 
 
 const getDron = async (req, res) => {
     const { id } = req.params;
-    console.log('***', id)
     try {
-        const data = await droneModel.find({_id: id })
+        const data = await droneModel.findById(id)
         res.status(200).send({
             success: true,
             data
         })
     } catch (error) {
-        console.log(e);
-        handleHttpError(res, `ERROR_GET_DRON: ${id}`);
+        handleHttpError(res, `ERROR_GET_DRON: ${id}`, 500);
     }
 }
 
@@ -42,8 +39,7 @@ const createDrone = async (req, res) => {
         await droneModel.create(body);
         res.status(201).send({});
     } catch (error) {
-        console.log(e);
-        handleHttpError(res, `ERROR_CREATE_DRON: ${id}`);
+        handleHttpError(res, `ERROR_CREATE_DRON`, 500);
     }
 }
 
@@ -52,11 +48,10 @@ const updateDrone = async (req, res) => {
     const id = req.params.id;
 
     try {
-        await droneModel.findOneAndUpdate(id, body);
+        await droneModel.findOneAndUpdate({_id: id}, body);
         res.status(200).send({})
     } catch (error) {
-        console.log(e);
-        handleHttpError(res, `ERROR_UPDATE_DRON: ${id}`);
+        handleHttpError(res, `ERROR_UPDATE_DRON`, 500);
     }
 }
 
@@ -67,8 +62,7 @@ const deleteDrone = async (req, res) => {
         await droneModel.delete({_id:id});
         res.status(200).send({})
     } catch (error) {
-        console.log(e);
-        handleHttpError(res, `ERROR_DELETE_DRON: ${id}`);
+        handleHttpError(res, `ERROR_DELETE_DRON`, 500);
     }
 }
 

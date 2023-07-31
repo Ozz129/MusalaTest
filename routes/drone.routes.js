@@ -1,10 +1,6 @@
 const express = require("express");
 const router = express.Router();
 
-/*const {
-  validatorCreateItem,
-  validatorGetItem,
-} = require("../validators/bookings");*/
 const {
   getDrones,
   getDron,
@@ -14,145 +10,168 @@ const {
 } = require("../controllers/dron.controller");
 
 /**
- * Get all bookings
  * @openapi
- * /bookings:
- *    get:
- *      tags:
- *        - bookings
- *      summary: "Bookings list"
- *      description: Get the entire list of bookings
- *      security:
- *        - bearerAuth: []
- *      responses:
- *        '200':
- *          description: Get the entire list of bookings.
- *          content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/booking'
- *        '422':
- *          description: validation error.
- */
-router.get("/", getDrones);
-/**
- * Get booking
- * @openapi
- * /bookings/{id}:
- *    get:
- *      tags:
- *        - bookings
- *      summary: "Booking detail"
- *      description: Booking detail
- *      security:
- *        - bearerAuth: []
- *      parameters:
- *      - name: id
- *        in: path
- *        description: booking id
- *        required: true
- *        schema:
- *          type: string
- *      responses:
- *        '200':
- *          description: Get booking details.
- *          content:
+ * /drone:
+ *     get:
+ *       summary: Get drones
+ *       description: Retrieve a list of drones
+ *       tags: [Dron]
+ *       responses:
+ *         200:
+ *           description: A list of drones.
+ *           content:
  *             application/json:
  *               schema:
- *                   $ref: '#/components/schemas/booking'
- *        '422':
- *          description: validation error.
+ *                 type: object
+ *                 properties:
+ *                   success:
+ *                     type: boolean
+ *                   data:
+ *                     type: array
+ *                     items:
+ *                       $ref: '#/definitions/dron'
+ *         500:
+ *           description: Internal server error.
+ * 
+ * definitions:
+ *  dron:
+ *    type: "object"
+ *    properties:
+ *      _id:
+ *        type: "string"
+ *      serial:
+ *        type: "string"
+ *      loadStatus:
+ *        type: "boolean"
+ *      capacity:
+ *        type: "integer"
+ *        format: "int32"
+ *      battery:
+ *        type: "integer"
+ *        format: "int32"
+ *      batteryStatus:
+ *        type: "boolean"
+ *      deleted:
+ *        type: "boolean"
+ *      createdAt:
+ *        type: "string"
+ *        format: "date-time"
+ *      updatedAt:
+ *        type: "string"
+ *        format: "date-time"
+ *      __v:
+ *        type: "integer"
+ *        format: "int32"
+ */
+router.get("/", getDrones);
+
+/**
+ * @openapi
+ * /drone/{id}:
+ *     get:
+ *       summary: Get specific drone
+ *       description: Retrieve a list of drone
+ *       tags: [Dron]
+ *       parameters:
+ *         - in: path
+ *           name: id
+ *           required: true
+ *           schema:
+ *             type: string
+ *           description: The ID of the dron to get dispatches for.
+ *       responses:
+ *         200:
+ *            content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 properties:
+ *                   success:
+ *                     type: boolean
+ *                   data:
+ *                     type: array
+ *                     items:
+ *                       $ref: '#/definitions/dron'
+ *
+ *         500:
+ *           description: Internal server error.
+ * 
+ * definitions:
+ *  dron:
+ *    type: "object"
+ *    properties:
+ *      _id:
+ *        type: "string"
+ *      serial:
+ *        type: "string"
+ *      loadStatus:
+ *        type: "boolean"
+ *      capacity:
+ *        type: "integer"
+ *        format: "int32"
+ *      battery:
+ *        type: "integer"
+ *        format: "int32"
+ *      batteryStatus:
+ *        type: "boolean"
+ *      deleted:
+ *        type: "boolean"
+ *      createdAt:
+ *        type: "string"
+ *        format: "date-time"
+ *      updatedAt:
+ *        type: "string"
+ *        format: "date-time"
+ *      __v:
+ *        type: "integer"
+ *        format: "int32"
  */
 router.get("/:id", getDron);
+
 /**
- * Register new booking
  * @openapi
- * /bookings:
- *    post:
- *      tags:
- *        - bookings
- *      summary: "Register booking"
- *      description: Regist a new booking
- *      security:
- *        - bearerAuth: []
- *      responses:
- *        '200':
- *          description: Get the new booking registered.
- *        '422':
- *          description: Validation error.
- *      requestBody:
- *          content:
- *            application/json:
- *              schema:
- *                 $ref: "#/components/schemas/booking"
- *    responses:
- *      '201':
- *        description: Get the object registered '201'
+ * /drone:
+ *     post:
+ *       summary: Create drone
+ *       description: Create a new dron.
+ *       tags: [Dron]
+ *       parameters:
+ *         - in: body
+ *           name: serial
+ *           required: true
+ *           schema:
+ *             type: string
+ *           description: dron's serial.
+ *         - in: body
+ *           name: load
+ *           required: true
+ *           schema: 
+ *             type: integer
+ *           description: dron's serial.
+ *         - in: body
+ *           name: capacity
+ *           required: true
+ *           schema: 
+ *             type: integer
+ *           description: dron's serial.
+ *         - in: body
+ *           name: battery
+ *           required: true
+ *           schema: 
+ *             type: integer
+ *           description: dron's serial.
+ *       responses:
+ *         201:
+ *           description: Success creation confirmation.
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *         500:
+ *           description: Internal server error.
  */
 router.post("/", createDrone);
-/**
- * Update booking
- * @openapi
- * /bookings/{id}:
- *    put:
- *      tags:
- *        - bookings
- *      summary: "Update booking"
- *      description: Update a booking
- *      security:
- *        - bearerAuth: []
- *      parameters:
- *      - name: id
- *        in: path
- *        description: booking id
- *        required: true
- *        schema:
- *          type: string
- *      responses:
- *        '200':
- *          description: Get the booking detail updated.
- *        '422':
- *          description: Validation error.
- *      requestBody:
- *          content:
- *            application/json:
- *              schema:
- *                 $ref: "#/components/schemas/booking"
- *    responses:
- *      '201':
- *        description: Get the object
- *        content:
- *           application/json:
- *             schema:
- *                $ref: '#/components/schemas/booking'
- */
 router.put("/:id", updateDrone);
-/**
- * Delete booking
- * @openapi
- * /bookings/{id}:
- *    delete:
- *      tags:
- *        - bookings
- *      summary: "Delete booking"
- *      description: Delete booking
- *      security:
- *        - bearerAuth: []
- *      parameters:
- *      - name: id
- *        in: path
- *        description: Booking id
- *        required: true
- *        schema:
- *          type: string
- *      responses:
- *        '200':
- *          description: Get the booking object.
- *        '422':
- *          description: Validation error.
- */
 router.delete("/:id", deleteDrone);
 
 module.exports = router;

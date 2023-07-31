@@ -14,8 +14,7 @@ const getMeds = async (req, res) => {
             data
         })
     } catch (error) {
-        console.log(e);
-        handleHttpError(res, "ERROR_GET_MEDES");
+        handleHttpError(res, "ERROR_GET_MEDS", 500);
     }
 }
 
@@ -24,14 +23,14 @@ const getMed = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const data = await medModel.find({ id })
+        const data = await medModel.findById( id )
         res.status(200).send({
             success: true,
             data
         })
     } catch (error) {
-        console.log(e);
-        handleHttpError(res, `ERROR_GET_MED: ${id}`);
+        
+        handleHttpError(res, `ERROR_GET_MED`, 500);
     }
 }
 
@@ -42,8 +41,8 @@ const createMed = async (req, res) => {
         await medModel.create(body);
         res.status(201).send({});
     } catch (error) {
-        console.log(e);
-        handleHttpError(res, `ERROR_CREATE_MED: ${id}`);
+        ;
+        handleHttpError(res, `ERROR_CREATE_MED`, 500);
     }
 }
 
@@ -52,11 +51,10 @@ const updateMed = async (req, res) => {
     const id = req.params.id;
 
     try {
-        await medModel.findOneAndUpdate(id, body);
+        await medModel.findOneAndUpdate({_id: id}, body);
         res.status(200).send({})
     } catch (error) {
-        console.log(e);
-        handleHttpError(res, `ERROR_UPDATE_MED: ${id}`);
+        handleHttpError(res, `ERROR_UPDATE_MED`, 500);
     }
 }
 
@@ -67,8 +65,7 @@ const deleteMed = async (req, res) => {
         await medModel.delete({_id:id});
         res.status(200).send({})
     } catch (error) {
-        console.log(e);
-        handleHttpError(res, `ERROR_DELETE_MED: ${id}`);
+        handleHttpError(res, `ERROR_DELETE_MED`, 500);
     }
 }
 

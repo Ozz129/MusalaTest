@@ -17,7 +17,7 @@ const createDispatch = async (req, res) => {
         const dronData = await dronModel.findOne({_id: drone});
 
         if (!dronData.batteryStatus) {
-            return handleHttpError(res, `ERROR_BATTERY_LOW}`);
+            return handleHttpError(res, `ERROR_BATTERY_LOW`);
         }else if(!dronData.loadStatus) {
            return  handleHttpError(res, `ERROR_NOT_AVAILABLE_SPACE`);
         }
@@ -54,11 +54,9 @@ const createDispatch = async (req, res) => {
 
         res.status(201).send(objRta)
     } catch (error) {
-        res.status(500).send(error)
+        handleHttpError(res, `ERROR_CREATE_DISPATCH`, 500);
     }
 }
-
-
 const getDronDispatches = async (req, res) => {
     const { idDron } = req.params;
     try {
