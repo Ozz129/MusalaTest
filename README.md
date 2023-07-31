@@ -106,7 +106,8 @@ We are using a MongoDB cluster to store all the application data securely. Ensur
 
 You can access the Swagger documentation for the API, which provides a detailed reference for all endpoints and their usage. The Swagger documentation URL is: http://localhost:3000/api-docs/#/
 
-## Swagger Documentation
+## Disclaimer
 
 For communication purposes only, we stored the database password in a .env file. Please note that this practice is generally discouraged due to security concerns.
 
+Please note that the Swagger documentation may not include all available endpoints due to ongoing development and updates. 
