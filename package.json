@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon index.js",
     "test": "cross-env NODE_ENV=test jest --silent --runInBand",
-    "test:file": "cross-env NODE_ENV=test jest --silent --runInBand --testNamePattern=$1"
+    "test:file": "cross-env NODE_ENV=test jest --silent --runInBand --testNamePattern=$npm_config_test"
   },
   "keywords": [],
   "author": "",
