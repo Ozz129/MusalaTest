@@ -111,3 +111,11 @@ You can access the Swagger documentation for the API, which provides a detailed 
 For communication purposes only, we stored the database password in a .env file. Please note that this practice is generally discouraged due to security concerns.
 
 Please note that the Swagger documentation may not include all available endpoints due to ongoing development and updates. 
+
+## Testing Data
+
+Available Dron: 64c5a294186e28c55e2b4bd5
+Low battery Dron: 64c8dff043d3d6688922244a
+Dron whitout space: 64c8e01c43d3d6688922244b
+
+med: 64c57d15d1bb7af728599fa0
